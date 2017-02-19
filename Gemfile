@@ -31,10 +31,10 @@ group :development, :test do
   #for testing
   gem "rspec-rails"
   gem "factory_girl_rails"
+  gem 'shoulda-matchers', require: false
 end
 
 group :test do
-  gem 'shoulda-matchers', require: false
   gem "faker"
   gem "database_cleaner"
 end
