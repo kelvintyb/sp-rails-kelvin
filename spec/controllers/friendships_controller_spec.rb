@@ -14,4 +14,33 @@ RSpec.describe FriendshipsController, type: :controller do
       expect(User.last.friend_users.first).to eq(User.first)
     end
   end
+
+  describe "GET #show" do
+    it "shows all friends for a given email" do
+      create_list(:user, 2)
+      @friends = []
+      @friends << User.first.email
+      @friends << User.last.email
+
+      post :create, params: {friends: @friends}
+      get :show, params: {friends: User.first.email}
+      json = JSON.parse(response.body)
+      expect(json["friends"][0]).to eq(User.last.email)
+      expect(json["count"]).to eq(1)
+    end
+  end
+
+  describe "GET #show_common" do
+    it "shows emails of common friends between two Users" do
+      create_list(:user, 2)
+      @friends = []
+      @friends << User.first.email
+      @friends << User.last.email
+
+      post :create, params: {friends: @friends}
+      expect(User.first.friend_users.first).to eq(User.last)
+      expect(User.last.friend_users.first).to eq(User.first)
+    end
+  end
+
 end

@@ -16,7 +16,7 @@ class FriendshipsController < ApplicationController
   end
 
   def show
-    
+  
   end
 
   def show_common
