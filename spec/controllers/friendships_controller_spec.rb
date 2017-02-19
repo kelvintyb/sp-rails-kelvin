@@ -10,7 +10,8 @@ RSpec.describe FriendshipsController, type: :controller do
       @friends << User.last.email
 
       post :create, params: {friends: @friends}
-      expect(User.first.friendships.first).to eq(User.last)
+      expect(User.first.friend_users.first).to eq(User.last)
+      expect(User.last.friend_users.first).to eq(User.first)
     end
   end
 end

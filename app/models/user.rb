@@ -4,5 +4,5 @@ class User < ApplicationRecord
   validates_format_of :email, :with => /@/
 
   has_many :friendships
-  has_many :friends, through: :friendships
+  has_many :friend_users, through: :friendships, dependent: :destroy
 end

@@ -1,4 +1,9 @@
 class SubscriptionsController < ApplicationController
-  def blockades
+  def create
+
+  end
+
+  def show
+    
   end
 end

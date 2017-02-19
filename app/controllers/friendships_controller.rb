@@ -1,6 +1,5 @@
 class FriendshipsController < ApplicationController
   def create
-    #consider adding conditional here, and checking if emails exist as users in first place - can give error message if 1 or more emails not valid in Users
     @emails = params[:friends]
     if User.where(email: @emails).length != 2
       render json: {
@@ -8,15 +7,18 @@ class FriendshipsController < ApplicationController
         status: 400
       }, status: :bad_request
     else
-      puts @emails
-      puts @emails[0]
-      puts @emails[0].friends
+      @first_user = User.find_by(email: @emails[0])
+      @second_user = User.find_by(email: @emails[1])
 
-      @first_user = User.where(email: @emails[0])
-      @second_user = User.where(email: @emails[1])
-      Friendship.create({user: @first_user, friend_user: @second_user})
-      # @first_user.friendships.create({friend_user: @second_user})
+      @first_user.friend_users << @second_user
       render json: {status: "success"}, status: :ok
     end
+  end
+
+  def show
+    
+  end
+
+  def show_common
   end
 end
