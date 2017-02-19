@@ -14,6 +14,18 @@ class SubscriptionsController < ApplicationController
   end
 
   def show
-    # render json: {status: "success", recipients: @recipients}, status: :ok
+    @sender = User.find_by(email: params[:sender])
+    @recipients = []
+
+    @subscribers = @sender.subscribers.map(&:email)
+    @friends = @sender.friend_users.map(&:email)
+    @mentions = params[:text].scan(/\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}\b/i)
+    @blockers = @sender.blockers.map(&:email)
+
+    @recipients.push(*@subscribers)
+    @recipients.push(*@friends)
+    @recipients.push(*@mentions)
+    @recipients = @recipients.uniq.delete_if {|email| @blockers.include?(email)}
+    render json: {status: "success", recipients: @recipients}, status: :ok
   end
 end
