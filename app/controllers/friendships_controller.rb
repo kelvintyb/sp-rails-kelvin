@@ -16,7 +16,20 @@ class FriendshipsController < ApplicationController
   end
 
   def show
-  
+    if !User.exists?(email: params[:email])
+      render json: {
+        error: "No users exist with the submitted email; check submitted email address",
+        status: 400
+      }, status: :bad_request
+    else
+      @target_user = User.find_by(email: params[:email])
+      @target_friends = @target_user.friend_users.map(&:email)
+      @count = @target_friends.length
+      render json: {
+        status: "success",
+        friends: @target_friends,
+        count: @count
+      }, status: :ok
   end
 
   def show_common
