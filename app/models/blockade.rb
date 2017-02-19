@@ -1,0 +1,2 @@
+class Blockade < ApplicationRecord
+end
