@@ -30,6 +30,7 @@ class FriendshipsController < ApplicationController
         friends: @target_friends,
         count: @count
       }, status: :ok
+    end
   end
 
   def show_common

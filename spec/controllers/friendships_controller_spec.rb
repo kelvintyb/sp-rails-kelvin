@@ -23,7 +23,7 @@ RSpec.describe FriendshipsController, type: :controller do
       @friends << User.last.email
 
       post :create, params: {friends: @friends}
-      get :show, params: {friends: User.first.email}
+      get :show, params: {email: User.first.email}
       json = JSON.parse(response.body)
       expect(json["friends"][0]).to eq(User.last.email)
       expect(json["count"]).to eq(1)
