@@ -1,7 +1,7 @@
 class FriendshipsController < ApplicationController
   def create
     @emails = params[:friends]
-    if User.where(email: @emails).length != 2
+    if User.where(email: @emails).size != 2
       render json: {
         error: "1 or more of the emails submitted does not exist as a User; check submitted email addresses",
         status: 400
@@ -24,7 +24,7 @@ class FriendshipsController < ApplicationController
     else
       @target_user = User.find_by(email: params[:email])
       @target_friends = @target_user.friend_emails
-      @count = @target_friends.length
+      @count = @target_friends.size
       render json: {
         status: "success",
         friends: @target_friends,
@@ -35,7 +35,7 @@ class FriendshipsController < ApplicationController
 
   def show_common
     @emails = params[:friends]
-    if User.where(email: @emails).length != 2
+    if User.where(email: @emails).size != 2
       render json: {
         error: "1 or more of the emails submitted does not exist as a User; check submitted email addresses",
         status: 400
@@ -45,7 +45,7 @@ class FriendshipsController < ApplicationController
       @second_user_friends = User.find_by(email: @emails[1]).friend_emails
 
       @common_friends = @first_user_friends & @second_user_friends
-      @count = @common_friends.length
+      @count = @common_friends.size
       render json: {status: "success", friends: @common_friends, count: @count}, status: :ok
     end
   end
