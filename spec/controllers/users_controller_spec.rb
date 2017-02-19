@@ -5,9 +5,9 @@ RSpec.describe UsersController, type: :controller do
     it 'with email creates user' do
       expect {
               post :create,
-              email_address: "elon@spacex.com"
+              params: {email: "elon@spacex.com"}
             }.to change(User, :count).by(1)
-      expect(User.last.email_address).to eq("elon@spacex.com")
+      expect(User.last.email).to eq("elon@spacex.com")
     end
   end
 end
