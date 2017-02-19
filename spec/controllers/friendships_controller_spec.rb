@@ -43,11 +43,11 @@ RSpec.describe FriendshipsController, type: :controller do
       post :create, params: {friends: @friends}
 
       @friends = []
-      @friends << @second_user.email
+      @friends << @last_user.email
       @friends << @common_friend.email
       post :create, params: {friends: @friends}
 
-      @compare_friends = [@first_user.email, @second_user.email]
+      @compare_friends = [@first_user.email, @last_user.email]
       get :show_common, params: {friends: @compare_friends}
       json = JSON.parse(response.body)
       expect(json["friends"][0]).to eq(@common_friend.email)
