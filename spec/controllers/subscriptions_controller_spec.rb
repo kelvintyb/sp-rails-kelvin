@@ -25,12 +25,12 @@ RSpec.describe SubscriptionsController, type: :controller do
       @friends = []
       @friends << @first_user
       @friends << @second_user
-      post "/friendships", params: {friends: @friends}
+      post friendships_path, params: {friends: @friends}
 
       @friends = []
       @friends << @first_user
       @friends << @third_user
-      post "/friendships", params: {friends: @friends}
+      post friendships_path, params: {friends: @friends}
 
       post "/blockades", params: {requestor: @first_user, target: @second_user}
 
