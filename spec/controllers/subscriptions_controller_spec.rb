@@ -5,11 +5,11 @@ RSpec.describe SubscriptionsController, type: :controller do
   describe "POST #create" do
     it "with 2 emails creates a subscription" do
       create_list(:user, 2)
-      @first_user = User.first
-      @second_user = User.second
+      @first_user = User.first.email
+      @second_user = User.second.email
 
       post :create, params: {requestor: @first_user, target: @second_user}
-      expect(User.first.subscribed_to.first).to eq(User.second)
+      expect(User.first.subscribing.first).to eq(User.second)
       expect(User.second.subscribers.first).to eq(User.first)
     end
   end

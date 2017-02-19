@@ -1,15 +1,20 @@
 class FriendshipsController < ApplicationController
   def create
     @emails = params[:friends]
+    @first_user = User.find_by(email: @emails[0])
+    @second_user = User.find_by(email: @emails[1])
+
     if User.where(email: @emails).size != 2
       render json: {
         error: "1 or more of the emails submitted does not exist as a User; check submitted email addresses",
         status: 400
       }, status: :bad_request
+    elsif @first_user.blocking?(@second_user) || @second_user.blocking?(@first_user)
+      render json: {
+        error: "New friend connections cannot be added between these emails due to a block",
+        status: 403
+      }, status: :forbidden
     else
-      @first_user = User.find_by(email: @emails[0])
-      @second_user = User.find_by(email: @emails[1])
-
       @first_user.friend_users << @second_user
       render json: {status: "success"}, status: :ok
     end
