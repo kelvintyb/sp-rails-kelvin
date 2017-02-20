@@ -9,7 +9,7 @@ class SubscriptionsController < ApplicationController
       @requestor = User.find_by(email: params[:requestor])
       @target = User.find_by(email: params[:target])
       @requestor.subscribe_to(@target)
-      render json: {status: "success"}, status: :ok
+      render json: {success: true}, status: :ok
     end
   end
 
@@ -32,7 +32,7 @@ class SubscriptionsController < ApplicationController
       @recipients.push(*@friends)
       @recipients.push(*@mentions)
       @recipients = @recipients.uniq.delete_if {|email| @blockers.include?(email)}
-      render json: {status: "success", recipients: @recipients}, status: :ok
+      render json: {success: true, recipients: @recipients}, status: :ok
     end
   end
 end

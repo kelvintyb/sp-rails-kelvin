@@ -9,7 +9,7 @@ class BlockadesController < ApplicationController
       @requestor = User.find_by(email: params[:requestor])
       @target = User.find_by(email: params[:target])
       @requestor.block(@target)
-      render json: {status: "success"}, status: :ok
+      render json: {success: true}, status: :ok
     end
   end
 end

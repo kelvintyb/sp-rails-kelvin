@@ -16,7 +16,7 @@ class FriendshipsController < ApplicationController
       }, status: :forbidden
     else
       @first_user.friend_users << @second_user
-      render json: {status: "success"}, status: :ok
+      render json: {success: true}, status: :ok
     end
   end
 
@@ -31,7 +31,7 @@ class FriendshipsController < ApplicationController
       @target_friends = @target_user.friend_emails
       @count = @target_friends.size
       render json: {
-        status: "success",
+        success: true,
         friends: @target_friends,
         count: @count
       }, status: :ok
@@ -51,7 +51,7 @@ class FriendshipsController < ApplicationController
 
       @common_friends = @first_user_friends & @second_user_friends
       @count = @common_friends.size
-      render json: {status: "success", friends: @common_friends, count: @count}, status: :ok
+      render json: {success: true, friends: @common_friends, count: @count}, status: :ok
     end
   end
 end
